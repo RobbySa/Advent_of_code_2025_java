@@ -7,8 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public abstract class SolutionUtility {
     public Scanner getFileScanner(Path filePath) {
@@ -37,5 +39,11 @@ public abstract class SolutionUtility {
         scanner.close();
 
         return lines;
+    }
+
+    public List<String> splitLinesAndFlattenBy(String delimiter, List<String> line) {
+        return line.stream()
+                   .flatMap(s -> Arrays.stream(s.split(delimiter)))
+                   .toList();
     }
 }
