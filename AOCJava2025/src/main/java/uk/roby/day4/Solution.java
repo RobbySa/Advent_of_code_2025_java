@@ -1,59 +1,73 @@
-package uk.roby.day1;
+package uk.roby.day4;
 
 import uk.roby.SolutionUtility;
 
 import java.util.List;
 
 public class Solution extends SolutionUtility {
-    private final List<String> fileLines;
+    private final List<List<String>> fileLinesSplit;
 
     public Solution(String filePath) {
-        this.fileLines = readLines(filePath);
+        this.fileLinesSplit = splitLinesBy("", readLines(filePath));
     }
 
     public void solvePart1() {
-        var pointer = 50;
         var count = 0;
+        var numberOfLines = fileLinesSplit.size();
+        var lineLength = fileLinesSplit.getFirst().size();
 
-        for (String line : this.fileLines) {
-            if ('L' == line.charAt(0)) {
-                pointer -= Integer.parseInt(line.substring(1));
-            } else {
-                pointer += Integer.parseInt(line.substring(1));
+        for (int y = 0; y < numberOfLines; y++) {
+            for (int x = 0; x < lineLength; x++) {
+                var adjacentCells = getElementsAround(fileLinesSplit, new Integer[]{x, y});
+
+                if (fileLinesSplit.get(y).get(x).equals("@")) {
+                    if (countOccurrences("@", adjacentCells) < 4) {
+                        count++;
+                    }
+                }
             }
-
-            pointer %= 100;
-            if (pointer == 0) { count++; }
         }
 
         IO.println(count);
     }
 
+    public static int countOccurrences(String target, String[][] grid) {
+        int count = 0;
+
+        for (String[] strings : grid) {
+            for (String string : strings) {
+                if (string == null) { continue; }
+                if (string.equals(target)) { count++; }
+            }
+        }
+
+        return count;
+    }
+
     public void solvePart2() {
-        var pointer = 50;
         var count = 0;
 
-        for (String line : this.fileLines) {
-            var amount = Integer.parseInt(line.substring(1));
-            var fullRotations = amount / 100;
-            var partialRotation = amount % 100;
+        var numberOfLines = fileLinesSplit.size();
+        var lineLength = fileLinesSplit.getFirst().size();
+        var removed = -1;
 
-            // Subtract to represent a left rotation and add to represent a right rotation
-            pointer = 'L' == line.charAt(0) ? (pointer - partialRotation) : (pointer + partialRotation);
+        while (removed != 0) {
+            removed = 0;
 
-            if (pointer >= 100) {
-                pointer -= 100;
-                count++;
-            } else if (pointer < 0 && pointer != -partialRotation) {
-                pointer += 100;
-                count++;
-            } else if (pointer < 0) {
-                pointer += 100;
-            } else if (pointer == 0) {
-                count++;
+            for (int y = 0; y < numberOfLines; y++) {
+                for (int x = 0; x < lineLength; x++) {
+                    var adjacentCells = getElementsAround(fileLinesSplit, new Integer[]{x, y});
+
+                    if (fileLinesSplit.get(y).get(x).equals("@")) {
+                        if (countOccurrences("@", adjacentCells) < 4) {
+                            fileLinesSplit.get(y).set(x, ".");
+                            removed++;
+                        }
+                    }
+                }
             }
 
-            count += fullRotations;
+            count += removed;
         }
 
         IO.println(count);
