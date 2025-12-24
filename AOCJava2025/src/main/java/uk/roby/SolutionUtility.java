@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
-public abstract class SolutionUtility {
-    public Scanner getFileScanner(Path filePath) {
+public class SolutionUtility {
+    public static Scanner getFileScanner(Path filePath) {
         try {
             InputStream inputStream = Files.newInputStream(filePath);
             InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
@@ -28,7 +28,7 @@ public abstract class SolutionUtility {
         }
     }
 
-    public List<String> readLines(String filePath) {
+    public static List<String> readLines(String filePath) {
         Scanner scanner = getFileScanner(Path.of(filePath));
         List<String> lines = new ArrayList<>();
 
@@ -43,19 +43,21 @@ public abstract class SolutionUtility {
         return lines;
     }
 
-    public List<String> splitLinesAndFlattenBy(String delimiter, List<String> lines) {
+    public static List<String> splitLinesAndFlattenBy(String delimiter, List<String> lines) {
         return lines.stream()
                     .flatMap(s -> Arrays.stream(s.split(delimiter)))
                     .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public List<List<String>> splitLinesBy(String delimiter, List<String> lines) {
+    // TECH-DEBT: Turn this and all its usage into List<ArrayList<String>>
+    // TECH-DEBT: Account for potential lines = null -> return empty List
+    public static List<List<String>> splitLinesBy(String delimiter, List<String> lines) {
         return lines.stream()
                     .map(s -> Arrays.stream(s.split(delimiter)).collect(Collectors.toCollection(ArrayList::new)))
                     .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public String[][] getElementsAround(List<List<String>> grid, Integer[] position) {
+    public static String[][] getElementsAround(List<List<String>> grid, Integer[] position) {
         var surroundings = new String[3][3];
         var x = position[0];
         var y = position[1];
@@ -80,7 +82,7 @@ public abstract class SolutionUtility {
         return surroundings;
     }
 
-    private String[] getElementsAroundIndex(int index, List<String> line, Boolean excludeIndex) {
+    private static String[] getElementsAroundIndex(int index, List<String> line, Boolean excludeIndex) {
         var center = excludeIndex ? "Here" : line.get(index);
 
         if (index == 0) { return new String[]{null, center, line.get(index + 1)}; }
