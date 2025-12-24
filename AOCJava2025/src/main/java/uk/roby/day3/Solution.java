@@ -66,7 +66,7 @@ public class Solution {
         return count;
     }
 
-    private long arrayToLong(Integer[] numbers) {
+    private static long arrayToLong(Integer[] numbers) {
         long result = 0;
 
         for (int number : numbers) { result = result * 10 + number; }
@@ -77,7 +77,7 @@ public class Solution {
     // Looking for the biggest number in a substring which start from the last number found to the latest number that
     // can be checked while leaving space for the remaining batteries.
     // Example: for the first battery we will look from the first number until the 12th from the end
-    private Integer[] findGreatestNumberIn(String substring) {
+    private static Integer[] findGreatestNumberIn(String substring) {
         var maxValue = -1;
         var valueIndex = -1;
 
