@@ -16,7 +16,7 @@ public class Solution {
 //        this.rangeList = readText(filePath).split(",");
     }
 
-    public void solvePart1() {
+    public AtomicLong solvePart1() {
         AtomicLong count = new AtomicLong();
         var newRanges = getSubRanges(); // {[x, y], [x1, y2]...}
 
@@ -36,7 +36,27 @@ public class Solution {
             });
         });
 
-        IO.println(count);
+        return count;
+    }
+
+    // TODO: do not create a regular expression by string (check if alternative is there)
+    //   Pattern REPEATED_NUMBER = Pattern.compile("(\\d+)\\1+$")
+    //   if (REPEATED_NUMBER.matcher(stringNumber).matches()) {...}
+    public AtomicLong solvePart2() {
+        AtomicLong count = new AtomicLong();
+
+        rangeList.forEach( range -> {
+            var splitRange = range.split("-");
+            var startOfRange = Long.parseLong(splitRange[0]);
+            var endOfRange = Long.parseLong(splitRange[1]);
+            LongStream.rangeClosed(startOfRange, endOfRange).forEach( number -> {
+                var stringNumber = Long.toString(number);
+
+                if (stringNumber.matches("(\\d+)\\1+$")) { count.addAndGet(number); }
+            });
+        });
+
+        return count;
     }
 
     private List<String[]> getSubRanges() {
@@ -63,23 +83,10 @@ public class Solution {
         return newRanges;
     }
 
-    // TODO: do not create a regular expression by string (check if alternative is there)
-    //   Pattern REPEATED_NUMBER = Pattern.compile("(\\d+)\\1+$")
-    //   if (REPEATED_NUMBER.matcher(stringNumber).matches()) {...}
-    public void solvePart2() {
-        AtomicLong count = new AtomicLong();
+    static void main() {
+        var solution = new uk.roby.day2.Solution("src/main/resources/day2/input.txt");
 
-        rangeList.forEach( range -> {
-            var splitRange = range.split("-");
-            var startOfRange = Long.parseLong(splitRange[0]);
-            var endOfRange = Long.parseLong(splitRange[1]);
-            LongStream.rangeClosed(startOfRange, endOfRange).forEach( number -> {
-                var stringNumber = Long.toString(number);
-
-                if (stringNumber.matches("(\\d+)\\1+$")) { count.addAndGet(number); }
-            });
-        });
-
-        IO.println(count);
+        IO.println("Part 1 solution: " + solution.solvePart1());
+        IO.println("Part 2 solution: " + solution.solvePart2());
     }
 }

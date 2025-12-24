@@ -11,7 +11,7 @@ public class Solution  {
         this.fileLinesSplit = Utility.splitLinesBy("", Utility.readLines(filePath));
     }
 
-    public void solvePart1() {
+    public int solvePart1() {
         var count = 0;
         var numberOfLines = fileLinesSplit.size();
         var lineLength = fileLinesSplit.getFirst().size();
@@ -28,23 +28,10 @@ public class Solution  {
             }
         }
 
-        IO.println(count);
-    }
-
-    public static int countOccurrences(String target, String[][] grid) {
-        int count = 0;
-
-        for (String[] strings : grid) {
-            for (String string : strings) {
-                if (string == null) { continue; }
-                if (string.equals(target)) { count++; }
-            }
-        }
-
         return count;
     }
 
-    public void solvePart2() {
+    public int solvePart2() {
         var count = 0;
 
         var numberOfLines = fileLinesSplit.size();
@@ -70,6 +57,26 @@ public class Solution  {
             count += removed;
         }
 
-        IO.println(count);
+        return count;
+    }
+
+    public static int countOccurrences(String target, String[][] grid) {
+        int count = 0;
+
+        for (String[] strings : grid) {
+            for (String string : strings) {
+                if (string == null) { continue; }
+                if (string.equals(target)) { count++; }
+            }
+        }
+
+        return count;
+    }
+
+    static void main() {
+        var solution = new uk.roby.day4.Solution("src/main/resources/day4/input.txt");
+
+        IO.println("Part 1 solution: " + solution.solvePart1());
+        IO.println("Part 2 solution: " + solution.solvePart2());
     }
 }

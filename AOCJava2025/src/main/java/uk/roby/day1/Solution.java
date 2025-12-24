@@ -11,7 +11,7 @@ public class Solution {
         this.fileLines = Utility.readLines(filePath);
     }
 
-    public void solvePart1() {
+    public int solvePart1() {
         var dial = 50;
         var count = 0;
 
@@ -26,10 +26,10 @@ public class Solution {
             if (dial == 0) { count++; }
         }
 
-        IO.println(count);
+        return count;
     }
 
-    public void solvePart2() {
+    public int solvePart2() {
         var dial = 50;
         var count = 0;
 
@@ -56,6 +56,13 @@ public class Solution {
             count += fullRotations;
         }
 
-        IO.println(count);
+        return count;
+    }
+
+    static void main() {
+        var solution = new Solution("src/main/resources/day1/input.txt");
+
+        IO.println("Part 1 solution: " + solution.solvePart1());
+        IO.println("Part 2 solution: " + solution.solvePart2());
     }
 }

@@ -13,7 +13,7 @@ public class Solution {
         this.fileLines = Utility.readLines(filePath);
     }
 
-    public void solvePart1() {
+    public AtomicInteger solvePart1() {
         AtomicInteger count = new AtomicInteger();
 
         fileLines.forEach( line -> {
@@ -39,14 +39,13 @@ public class Solution {
             count.addAndGet((firstDigit * 10) + secondDigit);
         });
 
-        IO.println(count);
+        return count;
     }
 
-    public void solvePart2() {
-        final var batteryLineLength = 12;
-
+    public AtomicLong solvePart2() {
         AtomicLong count = new AtomicLong();
 
+        final var batteryLineLength = 12;
         fileLines.forEach( line -> {
             var currentIndex = -1;
             var digits = new Integer[batteryLineLength];
@@ -64,7 +63,7 @@ public class Solution {
             count.addAndGet(arrayToLong(digits));
         });
 
-        IO.println(count);
+        return count;
     }
 
     private long arrayToLong(Integer[] numbers) {
@@ -94,5 +93,12 @@ public class Solution {
         }
 
         return new Integer[]{maxValue, valueIndex};
+    }
+
+    static void main() {
+        var solution = new uk.roby.day3.Solution("src/main/resources/day3/input.txt");
+
+        IO.println("Part 1 solution: " + solution.solvePart1());
+        IO.println("Part 2 solution: " + solution.solvePart2());
     }
 }
