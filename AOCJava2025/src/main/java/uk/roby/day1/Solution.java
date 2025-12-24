@@ -1,36 +1,36 @@
 package uk.roby.day1;
 
-import uk.roby.SolutionUtility;
+import uk.roby.Utility;
 
 import java.util.List;
 
-public class Solution extends SolutionUtility {
+public class Solution {
     private final List<String> fileLines;
 
     public Solution(String filePath) {
-        this.fileLines = readLines(filePath);
+        this.fileLines = Utility.readLines(filePath);
     }
 
     public void solvePart1() {
-        var pointer = 50;
+        var dial = 50;
         var count = 0;
 
         for (String line : this.fileLines) {
             if ('L' == line.charAt(0)) {
-                pointer -= Integer.parseInt(line.substring(1));
+                dial -= Integer.parseInt(line.substring(1));
             } else {
-                pointer += Integer.parseInt(line.substring(1));
+                dial += Integer.parseInt(line.substring(1));
             }
 
-            pointer %= 100;
-            if (pointer == 0) { count++; }
+            dial %= 100;
+            if (dial == 0) { count++; }
         }
 
         IO.println(count);
     }
 
     public void solvePart2() {
-        var pointer = 50;
+        var dial = 50;
         var count = 0;
 
         for (String line : this.fileLines) {
@@ -39,17 +39,17 @@ public class Solution extends SolutionUtility {
             var partialRotation = amount % 100;
 
             // Subtract to represent a left rotation and add to represent a right rotation
-            pointer = 'L' == line.charAt(0) ? (pointer - partialRotation) : (pointer + partialRotation);
+            dial = 'L' == line.charAt(0) ? (dial - partialRotation) : (dial + partialRotation);
 
-            if (pointer >= 100) {
-                pointer -= 100;
+            if (dial >= 100) {
+                dial -= 100;
                 count++;
-            } else if (pointer < 0 && pointer != -partialRotation) {
-                pointer += 100;
+            } else if (dial < 0 && dial != -partialRotation) {
+                dial += 100;
                 count++;
-            } else if (pointer < 0) {
-                pointer += 100;
-            } else if (pointer == 0) {
+            } else if (dial < 0) {
+                dial += 100;
+            } else if (dial == 0) {
                 count++;
             }
 

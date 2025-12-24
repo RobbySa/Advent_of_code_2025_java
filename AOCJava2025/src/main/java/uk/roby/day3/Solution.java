@@ -1,16 +1,16 @@
 package uk.roby.day3;
 
-import uk.roby.SolutionUtility;
+import uk.roby.Utility;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Solution extends SolutionUtility {
+public class Solution {
     private final List<String> fileLines;
 
     public Solution(String filePath) {
-        this.fileLines = readLines(filePath);
+        this.fileLines = Utility.readLines(filePath);
     }
 
     public void solvePart1() {
@@ -21,6 +21,7 @@ public class Solution extends SolutionUtility {
             var secondDigit = -1;
 
             for (char ch : line.toCharArray()) {
+                // TODO: assert ch >= '0' && ch <= '9' : "the char must be in [0-9]";
                 var number = ch - '0'; // Clever way to convert a char into an int
 
                 if (firstDigit == -1) {

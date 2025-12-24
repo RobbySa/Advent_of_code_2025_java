@@ -12,9 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-
-public class SolutionUtility {
+public class Utility {
     public static Scanner getFileScanner(Path filePath) {
         try {
             InputStream inputStream = Files.newInputStream(filePath);

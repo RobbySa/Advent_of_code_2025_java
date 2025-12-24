@@ -1,14 +1,14 @@
 package uk.roby.day4;
 
-import uk.roby.SolutionUtility;
+import uk.roby.Utility;
 
 import java.util.List;
 
-public class Solution extends SolutionUtility {
+public class Solution  {
     private final List<List<String>> fileLinesSplit;
 
     public Solution(String filePath) {
-        this.fileLinesSplit = splitLinesBy("", readLines(filePath));
+        this.fileLinesSplit = Utility.splitLinesBy("", Utility.readLines(filePath));
     }
 
     public void solvePart1() {
@@ -18,7 +18,7 @@ public class Solution extends SolutionUtility {
 
         for (int y = 0; y < numberOfLines; y++) {
             for (int x = 0; x < lineLength; x++) {
-                var adjacentCells = getElementsAround(fileLinesSplit, new Integer[]{x, y});
+                var adjacentCells = Utility.getElementsAround(fileLinesSplit, new Integer[]{x, y});
 
                 if (fileLinesSplit.get(y).get(x).equals("@")) {
                     if (countOccurrences("@", adjacentCells) < 4) {
@@ -56,7 +56,7 @@ public class Solution extends SolutionUtility {
 
             for (int y = 0; y < numberOfLines; y++) {
                 for (int x = 0; x < lineLength; x++) {
-                    var adjacentCells = getElementsAround(fileLinesSplit, new Integer[]{x, y});
+                    var adjacentCells = Utility.getElementsAround(fileLinesSplit, new Integer[]{x, y});
 
                     if (fileLinesSplit.get(y).get(x).equals("@")) {
                         if (countOccurrences("@", adjacentCells) < 4) {
