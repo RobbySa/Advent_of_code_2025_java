@@ -2,11 +2,9 @@ package uk.roby.day3;
 
 import uk.roby.SolutionUtility;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Solution extends SolutionUtility {
     private final List<String> fileLines;
