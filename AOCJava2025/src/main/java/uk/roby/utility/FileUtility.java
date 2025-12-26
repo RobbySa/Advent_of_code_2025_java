@@ -1,4 +1,4 @@
-package uk.roby;
+package uk.roby.utility;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Utility {
+public class FileUtility {
     public static Scanner getFileScanner(Path filePath) {
         try {
             InputStream inputStream = Files.newInputStream(filePath);

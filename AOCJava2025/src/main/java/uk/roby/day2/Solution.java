@@ -1,6 +1,6 @@
 package uk.roby.day2;
 
-import uk.roby.Utility;
+import uk.roby.utility.FileUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Solution {
 
     public Solution(String filePath) {
         // TODO: Read the entire file as a block of text instead of flattening a list of size 1
-        this.rangeList = Utility.splitLinesAndFlattenBy(",", Utility.readLines(filePath));
+        this.rangeList = FileUtility.splitLinesAndFlattenBy(",", FileUtility.readLines(filePath));
 //        this.rangeList = readText(filePath).split(",");
     }
 

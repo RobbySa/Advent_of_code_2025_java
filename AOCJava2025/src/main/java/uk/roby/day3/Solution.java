@@ -1,6 +1,6 @@
 package uk.roby.day3;
 
-import uk.roby.Utility;
+import uk.roby.utility.FileUtility;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,7 +10,7 @@ public class Solution {
     private final List<String> fileLines;
 
     public Solution(String filePath) {
-        this.fileLines = Utility.readLines(filePath);
+        this.fileLines = FileUtility.readLines(filePath);
     }
 
     public AtomicInteger solvePart1() {

@@ -1,6 +1,6 @@
 package uk.roby.day1;
 
-import uk.roby.Utility;
+import uk.roby.utility.FileUtility;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ public class Solution {
     private final List<String> fileLines;
 
     public Solution(String filePath) {
-        this.fileLines = Utility.readLines(filePath);
+        this.fileLines = FileUtility.readLines(filePath);
     }
 
     public int solvePart1() {
