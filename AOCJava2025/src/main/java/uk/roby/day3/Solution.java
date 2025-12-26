@@ -21,7 +21,9 @@ public class Solution {
             var secondDigit = -1;
 
             for (char ch : line.toCharArray()) {
-                // TODO: assert ch >= '0' && ch <= '9' : "the char must be in [0-9]";
+                // Throw an error if ch is not a number between 0 and 9
+                assert ch >= '0' && ch <= '9' : "the char must be in [0-9]";
+
                 var number = ch - '0'; // Clever way to convert a char into an int
 
                 if (firstDigit == -1) {
