@@ -41,10 +41,14 @@ public class FileUtility {
         return lines;
     }
 
-    public static List<String> splitLinesAndFlattenBy(String delimiter, List<String> lines) {
-        return lines.stream()
-                    .flatMap(s -> Arrays.stream(s.split(delimiter)))
-                    .collect(Collectors.toCollection(ArrayList::new));
+    public static String readLinesAsBlock(String filePath) {
+        try {
+            return Files.readString(Path.of(filePath));
+        } catch(IOException e) {
+            IO.println("Something went wrong when reading the file: " + e.getMessage());
+
+            return "";
+        }
     }
 
     // TECH-DEBT: Turn this and all its usage into List<ArrayList<String>>

@@ -1,29 +1,29 @@
 package uk.roby.day2;
 
 import uk.roby.utility.FileUtility;
+import uk.roby.utility.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.regex.Pattern;
 import java.util.stream.LongStream;
 
 public class Solution {
     private final List<String> rangeList;
 
     public Solution(String filePath) {
-        // TODO: Read the entire file as a block of text instead of flattening a list of size 1
-        this.rangeList = FileUtility.splitLinesAndFlattenBy(",", FileUtility.readLines(filePath));
-//        this.rangeList = readText(filePath).split(",");
+        this.rangeList = Arrays.stream(FileUtility.readLinesAsBlock(filePath).split(",")).toList();
     }
 
     public AtomicLong solvePart1() {
         AtomicLong count = new AtomicLong();
-        var newRanges = getSubRanges(); // {[x, y], [x1, y2]...}
+        var newRanges = getSubRanges();
 
-        // TODO: Make a Pair struct (using generics types)
         newRanges.forEach( newRange -> {
-            var startOfRange = Long.parseLong(newRange[0]);
-            var endOfRange = Long.parseLong(newRange[1]);
+            var startOfRange = Long.parseLong(newRange.first());
+            var endOfRange = Long.parseLong(newRange.second());
 
             LongStream.rangeClosed(startOfRange, endOfRange).forEach( number -> {
                 var stringNumber = Long.toString(number);
@@ -39,11 +39,9 @@ public class Solution {
         return count;
     }
 
-    // TODO: do not create a regular expression by string (check if alternative is there)
-    //   Pattern REPEATED_NUMBER = Pattern.compile("(\\d+)\\1+$")
-    //   if (REPEATED_NUMBER.matcher(stringNumber).matches()) {...}
     public AtomicLong solvePart2() {
         AtomicLong count = new AtomicLong();
+        Pattern pattern = Pattern.compile("(\\d+)\\1+$");
 
         rangeList.forEach( range -> {
             var splitRange = range.split("-");
@@ -52,15 +50,15 @@ public class Solution {
             LongStream.rangeClosed(startOfRange, endOfRange).forEach( number -> {
                 var stringNumber = Long.toString(number);
 
-                if (stringNumber.matches("(\\d+)\\1+$")) { count.addAndGet(number); }
+                if (pattern.matcher(stringNumber).matches()) { count.addAndGet(number); }
             });
         });
 
         return count;
     }
 
-    private List<String[]> getSubRanges() {
-        List<String[]> newRanges = new ArrayList<>();
+    private List<Pair<String>> getSubRanges() {
+        List<Pair<String>> newRanges = new ArrayList<>();
 
         rangeList.forEach(range -> {
             var splitRange = range.split("-");
@@ -69,14 +67,13 @@ public class Solution {
             var startOfRange = splitRange[0];
             var endOfRange = splitRange[1];
 
-            // TODO: Change ofm to oom (order OF magnitude)
-            // ofm stands for order of magnitude
-            for (int ofm = startOfRange.length(); ofm <= endOfRange.length(); ofm++) {
-                if (ofm % 2 != 0) { continue; }
-                var startOfNewRange = ofm == startOfRange.length() ? startOfRange : "1" + "0".repeat(ofm - 1);
-                var endOfNewRange = ofm < endOfRange.length() ? "9".repeat(ofm) : endOfRange;
+            // oom stands for order of magnitude
+            for (int oom = startOfRange.length(); oom <= endOfRange.length(); oom++) {
+                if (oom % 2 != 0) { continue; }
+                var startOfNewRange = oom == startOfRange.length() ? startOfRange : "1" + "0".repeat(oom - 1);
+                var endOfNewRange = oom < endOfRange.length() ? "9".repeat(oom) : endOfRange;
 
-                newRanges.add(new String[]{startOfNewRange, endOfNewRange});
+                newRanges.add(new Pair<>(startOfNewRange, endOfNewRange));
             }
         });
 
@@ -84,7 +81,7 @@ public class Solution {
     }
 
     static void main() {
-        var solution = new uk.roby.day2.Solution("src/main/resources/day2/input.txt");
+        var solution = new Solution("src/main/resources/day2/input.txt");
 
         IO.println("Part 1 solution: " + solution.solvePart1());
         IO.println("Part 2 solution: " + solution.solvePart2());
