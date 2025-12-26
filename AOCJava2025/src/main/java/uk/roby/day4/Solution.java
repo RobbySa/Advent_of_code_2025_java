@@ -2,10 +2,11 @@ package uk.roby.day4;
 
 import uk.roby.utility.FileUtility;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Solution  {
-    private final List<List<String>> fileLinesSplit;
+    private final List<ArrayList<String>> fileLinesSplit;
 
     public Solution(String filePath) {
         this.fileLinesSplit = FileUtility.splitLinesBy("", FileUtility.readLines(filePath));

@@ -6,10 +6,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FileUtility {
@@ -51,15 +48,15 @@ public class FileUtility {
         }
     }
 
-    // TECH-DEBT: Turn this and all its usage into List<ArrayList<String>>
-    // TECH-DEBT: Account for potential lines = null -> return empty List
-    public static List<List<String>> splitLinesBy(String delimiter, List<String> lines) {
+    public static List<ArrayList<String>> splitLinesBy(String delimiter, List<String> lines) {
+        if (lines == null) { return Collections.emptyList(); }
+
         return lines.stream()
                     .map(s -> Arrays.stream(s.split(delimiter)).collect(Collectors.toCollection(ArrayList::new)))
                     .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public static String[][] getElementsAround(List<List<String>> grid, Integer[] position) {
+    public static String[][] getElementsAround(List<ArrayList<String>> grid, Integer[] position) {
         var surroundings = new String[3][3];
         var x = position[0];
         var y = position[1];
